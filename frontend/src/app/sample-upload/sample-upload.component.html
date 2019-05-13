@@ -1,0 +1,156 @@
+<button mat-raised-button color="primary" (click)="showSuccess()">测试</button>
+
+
+<!-- 选择目录, 目录中文件作为样本组 -->
+<div colspan="1" rowspan="1" *ngIf="!group_uploader.queue.length">
+  <h3>选择目录(样本及其衍生物)</h3>
+  <input type="file" ng2DirSelect webkitdirectory [uploader]="group_uploader" (OnDirChanged)="groupDirChanged($event)"/>
+</div>
+<!-- 目录中的文件列表 -->
+<div colspan="3" rowspan="1">
+  <div>
+
+    <h3>上传队列</h3>
+    <p *ngIf="group_id">{{ group_id }}</p>
+    <p>队列长度: {{ group_uploader?.queue?.length }}</p>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="50%">文件名</th>
+          <th>大小</th>
+          <th>进度</th>
+          <th>状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of group_uploader.queue">
+          <!-- <td><strong>{{ item?.file?.name }}</strong></td> -->
+          <td><strong>{{ item?.some?.webkitRelativePath }}</strong></td>
+          <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+          <td>
+            <mat-progress-bar color="primary" mode="determinate" [value]="item.progress"></mat-progress-bar>
+          </td>
+          <td class="text-center">
+            <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+            <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+            <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <mat-progress-bar color="primary" mode="determinate" [value]="group_uploader.progress"></mat-progress-bar>
+      <button mat-raised-button color="primary" (click)="groupDirUpload($event)" [disabled]="!group_uploader.getNotUploadedItems().length">Upload</button>
+      <button mat-raised-button color="warn" (click)="groupDirClean($event)" [disabled]="!group_uploader.queue.length">Clear</button>
+    </div>
+
+  </div>
+</div>
+
+<mat-grid-list cols="4" *ngIf="false">
+  <!-- 选择文件, 每个都是单独样本 -->
+  <mat-grid-tile colspan="1" rowspan="1">
+    <div class='container'>
+      <p>拖放文件, 每个都作为单独样本, 各自为1组</p>
+      <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="sample_uploader" style="background: black">
+
+      </div>
+    </div>
+  </mat-grid-tile>
+  <!-- 单独样本文件列表 -->
+  <mat-grid-tile colspan="3" rowspan="1">
+    <div>
+
+      <h3>上传队列</h3>
+      <p>队列长度: {{ sample_uploader?.queue?.length }}</p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="50%">文件名</th>
+            <th>大小</th>
+            <th>进度</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of sample_uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td>
+              <mat-progress-bar color="primary" mode="determinate" [value]="item.progress"></mat-progress-bar>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+            <td nowrap>
+              <button mat-raised-button color="primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">上传</button>
+              <button mat-raised-button color="accent" (click)="item.cancel()" [disabled]="!item.isUploading">取消</button>
+              <button mat-raised-button color="warn" (click)="item.remove()">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <mat-progress-bar color="primary" mode="determinate" [value]="sample_uploader.progress"></mat-progress-bar>
+        <button mat-raised-button color="primary" (click)="sample_uploader.uploadAll()" [disabled]="!sample_uploader.getNotUploadedItems().length">上传全部</button>
+        <button mat-raised-button color="accent" (click)="sample_uploader.cancelAll()" [disabled]="!sample_uploader.isUploading">取消全部</button>
+        <button mat-raised-button color="warn" (click)="sample_uploader.clearQueue()" [disabled]="!sample_uploader.queue.length">删除全部</button>
+      </div>
+
+    </div>
+  </mat-grid-tile>
+
+  <!-- 选择目录, 目录中文件作为样本组 -->
+  <mat-grid-tile colspan="1" rowspan="1" *ngIf="!group_uploader.queue.length">
+    <h3>选择目录(样本及其衍生物)</h3>
+    <input type="file" ng2FileSelect webkitdirectory [uploader]="group_uploader" />
+  </mat-grid-tile>
+  <!-- 目录中的文件列表 -->
+  <mat-grid-tile colspan="3" rowspan="1">
+    <div>
+
+      <h3>上传队列</h3>
+      <p>队列长度: {{ group_uploader?.queue?.length }}</p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="50%">文件名</th>
+            <th>大小</th>
+            <th>进度</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of group_uploader.queue">
+            <!-- <td><strong>{{ item?.file?.name }}</strong></td> -->
+            <td><strong>{{ item?.relativePath }}</strong></td>
+            <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td>
+              <mat-progress-bar color="primary" mode="determinate" [value]="item.progress"></mat-progress-bar>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <mat-progress-bar color="primary" mode="determinate" [value]="group_uploader.progress"></mat-progress-bar>
+        <button mat-raised-button color="primary" (click)="group_uploader.uploadAll()" [disabled]="!group_uploader.getNotUploadedItems().length">上传</button>
+        <button mat-raised-button color="warn" (click)="group_uploader.clearQueue()" [disabled]="!group_uploader.queue.length">取消</button>
+      </div>
+
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

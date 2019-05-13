@@ -1,0 +1,12 @@
+db
+redis
+handler_bk
+.git
+.svn
+*.pyc
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.sh
+test_samples
+

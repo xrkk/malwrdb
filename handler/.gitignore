@@ -1,0 +1,5 @@
+*.pyc
+*.svn
+*.vscode
+*.__pycache__
+test_resources

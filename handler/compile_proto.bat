@@ -1,0 +1,1 @@
+protoc malwrdb_proto.proto --python_out=proto_def

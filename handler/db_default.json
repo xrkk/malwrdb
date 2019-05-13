@@ -1,0 +1,113 @@
+{
+    "host_os": [
+        {
+            "platform": "windows",
+            "version": "xp",
+            "sp": 3,
+            "arch": "x86",
+            "desc": "WinXP Sp3 x86"
+        },
+        {
+            "platform": "windows",
+            "version": "7",
+            "sp": 1,
+            "arch": "x86",
+            "desc": "Win7 Sp1 x86"
+        },
+        {
+            "platform": "windows",
+            "version": "7",
+            "sp": 1,
+            "arch": "x64",
+            "desc": "Win7 Sp1 x64"
+        }
+    ],
+    "file_types": [
+        {
+            "name": "exe",
+            "desc": "PE 可执行文件"
+        },
+        {
+            "name": "dll",
+            "desc": "PE 动态链接库文件"
+        }
+    ],
+    "platforms": [
+        {
+            "name": "windows",
+            "desc": ""
+        },
+        {
+            "name": "linux",
+            "desc": ""
+        }
+    ],
+    "sample_relationships": [
+        {
+            "name": "unpack",
+            "desc": "脱壳"
+        },
+        {
+            "name": "dump",
+            "desc": "内存转储"
+        },
+        {
+            "name": "report",
+            "desc": "分析报告"
+        },
+        {
+            "name": "note",
+            "desc": "分析笔记"
+        }
+    ],
+    "overall_malicious_types": [
+        {
+            "name": "trojan",
+            "desc": "木马"
+        },
+        {
+            "name": "downloader",
+            "desc": "下载者"
+        }
+    ],
+    "malware_families": [
+        {
+            "name": "wannacry",
+            "desc": "勒索软件Wannacry"
+        }
+    ],
+    "programing_lang": [
+        {
+            "name": "C#",
+            "desc": ""
+        }
+    ],
+    "function_types": [
+        {
+            "name": "library",
+            "desc": "库函数"
+        },
+        {
+            "name": "standard",
+            "desc": "标准"
+        }
+    ],
+    "proc_behv_types": [
+        {
+            "name": "create",
+            "desc": "创建进程"
+        }
+    ],
+    "sys_behv_types": [
+        {
+            "name": "detect_os_version",
+            "desc": "检查系统版本"
+        }
+    ],
+    "feature_behv_types": [
+        {
+            "name": "anti_vm",
+            "desc": "反虚拟机"
+        }
+    ]
+}

@@ -1,0 +1,926 @@
+// TODO:
+// 1. 样本分组
+//
+
+syntax = "proto3";
+
+// package = "malwrdb";
+
+
+// -------------------------------------------------------------------------
+// Wrapper
+
+
+// 请求
+
+
+message RequestMessageWrapper{
+    string msg_type = 1;
+    oneof request_obj{
+
+        // 测试消息
+
+        TestMessage msg_request_test = 2;
+
+        // -------------------------------------------------------------------------
+        // (005-040) - 035 - 样本/分析
+
+
+        // (005-020) - 015 - 分析
+
+        AnalyzeSampleListMessage msg_analyze_sample_list = 5;
+
+        // (021-040) - 020 - 其他
+
+        SampleRelationshipMessage msg_sample_relationship = 21;
+
+
+        // -------------------------------------------------------------------------
+        // (041-100) - 060 - 不属于样本
+
+
+        // (041-050) - 010 - 主机
+
+        AddHostOsMessage msg_add_host_os = 41;
+        CloneHostOsMessage msg_clone_host_os = 42;
+        DelHostOsMessage msg_del_host_os = 43;
+
+        // (051-060) - 010 - 通信地址
+
+        AddCommTargetMessage msg_add_comm_target = 51;
+        AddCommTargetToSampleMessage msg_add_comm_target_to_sample = 52;
+        ConnectCommTargetMessage msg_connect_comm_target = 53;
+        DisconnectCommTargetMessage msg_disconnect_comm_target = 54;
+
+        // (061-070) - 010 - 攻击目标
+
+        AddAttackTargetMessage msg_add_attack_target = 61;
+        AddAttackTargetToSampleMessage msg_add_attack_target_to_sample = 62;
+        ConnectAttackTargetMessage msg_connect_attack_target = 63;
+        DisconnectAttackTargetMessage msg_disconnect_attack_target = 64;
+
+
+        // -------------------------------------------------------------------------
+        // (101-300) - 行为
+
+
+        // (101-110) - 010 - 文件
+
+        AppendFileBehvMessage msg_append_file_behv = 101;
+        ReplaceFileBehvMessage msg_replace_file_behv = 102;
+        ClearFileBehvMessage msg_clear_file_behv = 103;
+
+        // (111-120) - 010 - 注册表
+
+        AppendRegBehvMessage msg_append_reg_behv = 111;
+        ReplaceRegBehvMessage msg_replace_reg_behv = 112;
+        ClearRegBehvMessage msg_clear_reg_behv = 113;
+
+        // (121-130) - 010 - 网络
+
+        AppendNetworkBehvMessage msg_append_network_behv = 121;
+
+        // (131-140) - 010 - 进程
+
+        AppendProcBehvMessage msg_append_proc_behv = 131;
+        ReplaceProcBehvMessage msg_replace_proc_behv = 132;
+        ClearProcBehvMessage msg_clear_proc_behv = 133;
+
+        // (141-150) - 010 - 系统
+
+        AppendSysBehvMessage msg_append_sys_behv = 141;
+        ReplaceSysBehvMessage msg_replace_sys_behv = 142;
+        ClearSysBehvMessage msg_clear_sys_behv = 143;
+
+        // (151-160) - 010 - 窗口
+
+        AppendWindowBehvMessage msg_append_window_behv = 151;
+        ReplaceWindowBehvMessage msg_replace_window_behv = 152;
+        ClearWindowBehvMessage msg_clear_window_behv = 153;
+
+        // (161-170) - 010 - 服务
+
+        AppendServiceBehvMessage msg_append_service_behv = 161;
+        ReplaceServiceBehvMessage msg_replace_service_behv = 162;
+        ClearServiceBehvMessage msg_clear_service_behv = 163;
+
+        // (171-180) - 010 - 互斥体/事件
+
+        AppendMutexBehvMessage msg_append_mutex_behv = 171;
+        ReplaceMutexBehvMessage msg_replace_mutex_behv = 172;
+        ClearMutexBehvMessage msg_clear_mutex_behv = 173;
+
+        // (181-190) - 010 - 随便什么行为
+
+        AppendWhateverBehvMessage msg_append_whatever_behv = 181;
+        ReplaceWhateverBehvMessage msg_replace_whatever_behv = 182;
+        DelWhateverBehvMessage msg_del_whatever_behv = 183;
+        ClearWhateverBehvMessage msg_clear_whatever_behv = 184;
+
+        // (281-300) - 020 - 组合
+
+        AppendBehvFeatureMessage msg_append_behv_feature = 281;
+        ReplaceBehvFeatureMessage msg_replace_behv_feature = 282;
+        ClearBehvFeatureMessage msg_clear_behv_feature = 283;
+
+
+        // -------------------------------------------------------------------------
+        // (301-400) - 100 - 网络数据相关
+
+
+        // (301-310) - 010 - 样本网络信息
+
+        UpdateVtInfoMessage msg_update_vt_info = 301;
+        UpdateHybridInfoMessage msg_update_hybrid_info = 302;
+        UpdateReverseItInfoMessage msg_update_reverseit_info = 303;
+        UpdateMalwrInfoMessage msg_update_malwr_info = 304;
+
+        // (311-320) - 010 - 网络样本收集
+
+        ExtractVtSampleMessage msg_extract_vt_sample = 311;
+        ExtractHybridSampleMessage msg_extract_hybrid_sample = 312;
+        ExtractReverseItSampleMessage msg_extract_reverseit_sample = 313;
+        ExtractMalwrSampleMessage msg_extract_malwr_sample = 314;
+        ExtractTheZooSampleMessage msg_extract_thezoo_sample = 315;
+
+        // (321-330) - 010 - 网络Yara规则收集
+
+        ExtractPastbinYaraMessage msg_extract_pastbin_yara = 321;
+
+
+        // -------------------------------------------------------------------------
+        // (401-700) - 300 - 中英对照
+
+
+        // (401-410) - 010 - 文件类型
+
+        AddFileTypeMessage msg_add_file_type = 401;
+        DelFileTypeMessage msg_del_file_type = 402;
+
+        // (411-420) - 010 - 平台
+
+        AddPlatformMessage msg_add_platform = 411;
+        DelPlatformMessage msg_del_platform = 412;
+
+        // (421-430) - 010 - 样本关系
+
+        AddSampleRelationshipTypeMessage msg_add_sample_relationship_type = 421;
+        DelSampleRelationshipTypeMessage msg_del_sample_relationship_type = 422;
+
+        // (431-440) - 010 - 总体的恶意类型
+
+        AddOverallMaliciousTypeMessage msg_add_overall_malicious_type = 431;
+        DelOverallMaliciousTypeMessage msg_del_overall_malicious_type = 432;
+
+        // (441-450) - 010 - 恶意代码家族
+
+        AddMalwareFamilyMessage msg_add_malware_family = 441;
+        DelMalwareFamilyMessage msg_del_malware_family = 442;
+
+        // (451-460) - 010 - 编程语言
+
+        AddProgramingLangMessage msg_add_programing_lang = 451;
+        DelProgramingLangMessage msg_del_programing_lang = 452;
+
+        // (461-470) - 010 - 函数类型
+
+        AddFunctionTypeMessage msg_add_function_type = 461;
+        DelFunctionTypeMessage msg_del_function_type = 462;
+
+        // (471-480) - 010 - 进程行为类型
+
+        AddProcBehvTypeMessage msg_add_proc_behv_type = 471;
+        DelProcBehvTypeMessage msg_del_proc_behv_type = 472;
+
+        // (481-490) - 010 - 系统行为类型
+
+        AddSysBehvTypeMessage msg_add_sys_behv_type = 481;
+        DelSysBehvTypeMessage msg_del_sys_behv_type = 482;
+
+        // (491-500) - 010 - 组合行为
+
+        AddBehvFeatureTypeMessage msg_add_behv_feature_type = 491;
+        DelBehvFeatureTypeMessage msg_del_behv_feature_type = 492;
+
+
+        // -------------------------------------------------------------------------
+        //
+    }
+}
+
+
+// 回复
+
+
+message ResponseMessageWrapper{
+    string msg_type = 1;
+    oneof response_obj{
+
+        // -------------------------------------------------------------------------
+        // (005-040) - 035 -
+
+        TestMessage msg_response_test = 5;
+    }
+}
+
+
+// -------------------------------------------------------------------------
+
+
+// 测试消息
+message TestMessage {
+    string test = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// 与样本无关
+
+
+// 主机
+
+
+// 添加主机
+message AddHostOsMessage{
+	string platform = 1;
+	string version = 2;
+	string arch = 3;
+	string desc = 4;
+	int32 sp = 5;
+	string author = 6;
+}
+
+// 克隆主机
+message CloneHostOsMessage{
+    string src_host_os_id = 1;
+    string new_desc = 2;
+}
+
+// 删除主机
+message DelHostOsMessage{
+    string host_os_id = 1;
+}
+
+
+// 通信目标
+
+
+message AddCommTargetMessage{
+    int32 port = 1;
+    oneof target{
+        string domain = 2;
+        string ip_addr = 3;
+    }
+}
+
+
+message AddCommTargetToSampleMessage{
+    string sample_id = 1;
+    AddCommTargetMessage comm_target = 2;
+}
+
+
+message ConnectCommTargetMessage{
+    string sample_id = 1;
+    string comm_target_id = 2;
+}
+
+
+message DisconnectCommTargetMessage{
+    string sample_id = 1;
+    string comm_target_id = 2;
+}
+
+
+// 攻击目标
+
+
+message AddAttackTargetMessage{
+    repeated string continent_list = 1;
+    repeated string country_list = 2;
+    repeated string industry_list = 3;
+}
+
+
+message AddAttackTargetToSampleMessage{
+    string sample_id = 1;
+    AddAttackTargetMessage attack_target = 2;
+}
+
+
+message ConnectAttackTargetMessage{
+    string sample_id = 1;
+    string attack_target_id = 2;
+}
+
+
+message DisconnectAttackTargetMessage{
+    string sample_id = 1;
+    string attack_target_id = 2;
+}
+
+
+// -------------------------------------------------------------------------
+// 分析
+
+
+message AnalyzeSampleListMessage{
+    repeated string sample_id_list = 1;
+    bool is_overwrite = 2;
+}
+
+
+// -------------------------------------------------------------------------
+// 样本相关
+
+
+message SampleRelationshipMessage{
+    string parent_sample_id = 1;
+    repeated string child_sample_id_list = 2;
+    string relationship_type = 3;
+}
+
+
+// -------------------------------------------------------------------------
+// 行为
+
+
+//文件
+
+
+message FileBehvMessage{
+    string file_path = 1;
+}
+
+
+message AppendFileBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated FileBehvMessage file_behv_list = 5;
+}
+
+
+message ReplaceFileBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated FileBehvMessage file_behv_list = 5;
+}
+
+
+message ClearFileBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 注册表
+
+
+message RegBehvMessage{
+    string reg_path = 1;
+}
+
+
+message AppendRegBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated RegBehvMessage reg_behv_list = 5;
+}
+
+
+message ReplaceRegBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated RegBehvMessage reg_behv_list = 5;
+}
+
+
+message ClearRegBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 网络行为
+
+
+message AppendNetworkBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    string comm_target_id = 5;
+    string protocol = 6;
+
+    repeated string related_pcap_sample_id_list = 9;
+}
+
+
+// 进程行为
+
+
+message ProcBehvMessage{
+    string behv_type = 1;
+    string proc_path = 2;
+}
+
+
+message AppendProcBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated ProcBehvMessage proc_behv_list = 5;
+}
+
+
+message ReplaceProcBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated ProcBehvMessage proc_behv_list = 5;
+}
+
+
+message ClearProcBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 系统行为
+
+
+message SysBehvMessage{
+    string behv_type = 1;
+}
+
+
+message AppendSysBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated SysBehvMessage sys_behv_list = 5;
+}
+
+
+message ReplaceSysBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated SysBehvMessage sys_behv_list = 5;
+}
+
+
+message ClearSysBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 窗口行为
+
+
+message WindowBehvMessage{
+    repeated string behv_type_list = 1;
+    string window_class_name = 2;
+    string window_title_name = 3;
+    string window_content = 4;
+}
+
+
+message AppendWindowBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated WindowBehvMessage window_behv_list = 5;
+}
+
+
+message ReplaceWindowBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated WindowBehvMessage window_behv_list = 5;
+}
+
+
+message ClearWindowBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 服务行为
+
+
+message ServiceBehvMessage{
+    repeated string behv_type_list = 1;
+    string service_name = 2;
+    string service_display_name = 3;
+    string service_binary_path = 4;
+    int32 service_start_type = 5;
+}
+
+
+message AppendServiceBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated ServiceBehvMessage service_behv_list = 5;
+}
+
+
+message ReplaceServiceBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated ServiceBehvMessage service_behv_list = 5;
+}
+
+
+message ClearServiceBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 互斥体/事件行为
+
+
+message MutexBehvMessage{
+    repeated string behv_type_list = 1;
+    string mutex_string = 2;
+}
+
+
+message AppendMutexBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated MutexBehvMessage mutex_behv_list = 5;
+}
+
+
+message ReplaceMutexBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated MutexBehvMessage mutex_behv_list = 5;
+}
+
+
+message ClearMutexBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 随便什么行为
+
+
+message WhateverBehvMessage{
+    string behv_desc = 1;
+}
+
+
+message AppendWhateverBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated WhateverBehvMessage whatever_behv_list = 5;
+}
+
+
+message ReplaceWhateverBehvMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated WhateverBehvMessage whatever_behv_list = 5;
+}
+
+
+message DelWhateverBehvMessage{
+    string sample_id = 1;
+    string whatever_behv_id = 2;
+}
+
+
+message ClearWhateverBehvMessage{
+    string sample_id = 1;
+}
+
+
+// 组合行为
+
+
+message BehvFeatureMessage{
+    string behv_feature = 1;
+}
+
+
+message AppendBehvFeatureMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated BehvFeatureMessage behv_feature_list = 5;
+}
+
+
+message ReplaceBehvFeatureMessage{
+    string sample_id = 1;
+    repeated string behv_os_id_list = 2;
+
+    repeated BehvFeatureMessage behv_feature_list = 5;
+}
+
+
+message ClearBehvFeatureMessage{
+    string sample_id = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// 网络数据
+
+
+// VT
+
+
+message UpdateVtInfoMessage{
+    repeated string sample_id_list = 1;
+}
+
+
+// hybrid
+
+
+message UpdateHybridInfoMessage{
+    repeated string sample_id_list = 1;
+}
+
+
+// ReverseIt
+
+
+message UpdateReverseItInfoMessage{
+    repeated string sample_id_list = 1;
+}
+
+
+// Malwr
+
+
+message UpdateMalwrInfoMessage{
+    repeated string sample_id_list = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// 网络样本收集
+
+
+// VT
+
+
+message ExtractVtSampleMessage{
+    repeated string options = 1;
+}
+
+
+// hybrid
+
+
+message ExtractHybridSampleMessage{
+    repeated string options = 1;
+}
+
+
+// ReverseIt
+
+
+message ExtractReverseItSampleMessage{
+    repeated string options = 1;
+}
+
+
+// Malwr
+
+
+message ExtractMalwrSampleMessage{
+    repeated string options = 1;
+}
+
+
+// theZoo
+
+
+message ExtractTheZooSampleMessage{
+    repeated string options = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// 网络Yara规则收集
+
+
+// Github
+
+
+message ExtractPastbinYaraMessage{
+    repeated string options = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// 中英对照
+
+
+// 文件类型
+
+
+message FileTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddFileTypeMessage{
+    repeated FileTypeMessage file_type_list = 1;
+}
+
+
+message DelFileTypeMessage{
+    string file_type_id = 1;
+}
+
+
+// 平台
+
+
+message PlatformMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddPlatformMessage{
+    repeated PlatformMessage platform_list = 1;
+}
+
+
+message DelPlatformMessage{
+    string platform_id = 1;
+}
+
+
+// 样本关系
+
+
+message SampleRelationshipTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddSampleRelationshipTypeMessage{
+    repeated SampleRelationshipTypeMessage sample_relationship_list = 1;
+}
+
+
+message DelSampleRelationshipTypeMessage{
+    string sample_realtionship_type_id = 1;
+}
+
+
+// 总体的恶意类型
+
+
+message OverallMaliciousTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddOverallMaliciousTypeMessage{
+    repeated OverallMaliciousTypeMessage malicious_type_list = 1;
+}
+
+
+message DelOverallMaliciousTypeMessage{
+    string overall_malicious_type_id = 1;
+}
+
+
+// 恶意代码家族
+
+
+message MalwareFamilyMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddMalwareFamilyMessage{
+    repeated MalwareFamilyMessage malware_family_list = 1;
+}
+
+
+message DelMalwareFamilyMessage{
+    string malware_family_id = 1;
+}
+
+
+// 编程语言
+
+
+message ProgramingLangMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddProgramingLangMessage{
+    repeated ProgramingLangMessage programing_lang_list = 1;
+}
+
+
+message DelProgramingLangMessage{
+    string programing_lang_id = 1;
+}
+
+
+// 函数类型
+
+
+message FunctionTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddFunctionTypeMessage{
+    repeated FunctionTypeMessage func_type_list = 1;
+}
+
+
+message DelFunctionTypeMessage{
+    string function_type_id = 1;
+}
+
+
+// 进程行为类型
+
+
+message ProcBehvTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddProcBehvTypeMessage{
+    repeated ProcBehvTypeMessage proc_behv_type_list = 1;
+}
+
+
+message DelProcBehvTypeMessage{
+    string proc_behv_type_id = 1;
+}
+
+
+// 系统行为类型
+
+
+message SysBehvTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddSysBehvTypeMessage{
+    repeated SysBehvTypeMessage sys_behv_type_list = 1;
+}
+
+
+message DelSysBehvTypeMessage{
+    string sys_behv_type_id = 1;
+}
+
+
+// 组合行为
+
+
+message BehvFeatureTypeMessage{
+    string name = 1;
+    string desc = 2;
+}
+
+
+message AddBehvFeatureTypeMessage{
+    repeated BehvFeatureTypeMessage behv_feature_type_list = 1;
+}
+
+
+message DelBehvFeatureTypeMessage{
+    string behv_feature_type_id = 1;
+}
+
+
+// -------------------------------------------------------------------------
+// END OF FILE
+// -------------------------------------------------------------------------
